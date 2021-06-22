@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\RegisterType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register")
      */
-    public function register(Request $request): Response
+    public function register(EntityManagerInterface $entityManager, Request $request): Response
     {
         $form = $this->createForm(RegisterType::class);
         $form->add('register', Type\SubmitType::class);
@@ -30,6 +31,9 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $form->get('cgv')->getData()) {
+            $user = $form->getData();
+            $entityManager->persist($user);
+            $entityManager->flush();
             dump($form->getData());
         }
 
