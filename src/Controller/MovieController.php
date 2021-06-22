@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,9 +13,13 @@ class MovieController extends AbstractController
     /**
      * @Route("/movie/{id}", requirements={"id": "\d+"})
      */
-    public function details($id): Response
+    public function details($id, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('movie/details.html.twig');
+        $movie = $entityManager->getRepository(Movie::class)->findOneBy(['id' => $id]);
+
+        return $this->render('movie/details.html.twig', [
+            'movie' => $movie
+        ]);
     }
 
     /**
