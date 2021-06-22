@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MovieController extends AbstractController
 {
     /**
-     * @Route("/movie/{id}", requirements={"id": "\d+"})
+     * @Route("/movie/{id}", requirements={"id": "\d+"}, defaults={"id": 1})
      */
     public function details($id, EntityManagerInterface $entityManager): Response
     {

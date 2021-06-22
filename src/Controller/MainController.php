@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\MakerBundle\Security\UserClassBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,8 +13,11 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(MovieRepository $movieRepository): Response
     {
-        return $this->render('index.html.twig');
+        $movies = $movieRepository->findAll();
+        return $this->render('index.html.twig', [
+            'movies' => $movies
+        ]);
     }
 }
