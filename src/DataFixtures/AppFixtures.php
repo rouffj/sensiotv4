@@ -76,8 +76,8 @@ class AppFixtures extends Fixture
     public function getUsers(): array
     {
         return [
-            ['joseph', 'ROUFF', 'joseph@joseph.io', 'testtest'],
-            ['omar', 'SY', 'omar@sy.io', 'testtest']
+            ['joseph', 'ROUFF', 'joseph@joseph.io', '$2y$13$dEs4kcshNIsjFaGCjPEqZO3bSdtrG44gTLh94EON2Ez1cfJUuguAG'], #testtest
+            ['omar', 'SY', 'omar@sy.io', '$2y$13$dEs4kcshNIsjFaGCjPEqZO3bSdtrG44gTLh94EON2Ez1cfJUuguAG'] #testtest
         ];
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type as Type;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -41,7 +42,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register")
      */
-    public function register(EntityManagerInterface $entityManager, Request $request): Response
+    public function register(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(RegisterType::class);
         $form->add('register', Type\SubmitType::class);
@@ -50,6 +51,8 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid() && $form->get('cgv')->getData()) {
             $user = $form->getData();
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
             $entityManager->persist($user);
             $entityManager->flush();
             dump($form->getData());
