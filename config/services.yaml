@@ -23,3 +23,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Omdb\OmdbClient:
+        class: App\Omdb\OmdbClient
+        #arguments:
+        #    - '@http_client'
+        #    - 28c5b7b1
+        #    - https://www.omdbapi.com/
+        arguments:
+            $omdbToken: '%env(OMDB_TOKEN)%'
+            $omdbHost: https://www.omdbapi.com/
+            #$httpClient: '@http_client'
+        #autowire: false
